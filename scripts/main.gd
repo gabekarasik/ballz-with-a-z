@@ -1,0 +1,100 @@
+extends Node2D
+
+@export var brick_scene: PackedScene
+@export var ball_scene: PackedScene
+@export var powerup_scene: PackedScene
+
+var positions = Array()
+var balls = Array()
+var in_motion = 0
+var ball_speed = 500.0
+var ball_position = Vector2()
+var level = 1
+var new_balls = 0
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	ball_position = $StartPosition.position
+	var ball = ball_scene.instantiate()
+	ball.position = ball_position
+	balls.append(ball)
+	add_child(ball)
+	create_pos_array()
+	place_bricks()
+	move_bricks()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta: float) -> void:
+	if not in_motion:
+		if Input.is_action_just_released("shoot"):
+			var cursor_position = get_global_mouse_position()
+			var direction = (cursor_position - ball_position).normalized()
+			set_ball(direction)
+
+func create_pos_array():
+	var pos = Vector2(39, 37.0)
+	for n in 7:
+		positions.append(pos + Vector2(67 * n, 0))
+
+func place_bricks():
+	var num_bricks = randi_range(1, 6)
+	var num_doubled = randi_range(0, num_bricks)
+	
+	positions.shuffle()
+	
+	for i in num_bricks:
+		var brick = brick_scene.instantiate()
+		
+		brick.max_health = level
+		if i < num_doubled:
+			brick.max_health *= 2
+			
+		brick.position = positions[i]
+		
+		add_child(brick)
+	
+	var powerup = powerup_scene.instantiate()
+	powerup.position = positions[num_bricks]
+	add_child(powerup)
+
+func move_bricks():
+	var tween = create_tween().set_parallel()
+	for node in get_tree().get_nodes_in_group("bricks"):
+		tween.tween_property(node, "position", node.position + Vector2(0, 67), 0.5)
+
+func set_ball(direction):
+	for ball in balls:
+		ball.velocity = ball_speed * direction
+		in_motion += 1
+		await get_tree().create_timer(0.1).timeout
+		
+
+
+func set_in_motion() -> void:
+	if in_motion > 0:
+		in_motion -= 1
+	
+	if in_motion == 0:
+		load_next_level()
+
+
+func load_next_level():
+	$Floor.first_hit = false
+	level += 1
+	place_bricks()
+	move_bricks()
+	add_balls()
+	
+func new_ball():
+	new_balls += 1
+	
+func add_balls():
+	for i in new_balls:
+		var ball = ball_scene.instantiate()
+		balls.append(ball)
+		ball.position = ball_position
+		add_child(ball)
+	
+	new_balls = 0
+	

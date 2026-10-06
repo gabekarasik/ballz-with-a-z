@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cd0r7rhjp2hly"]
+
+[ext_resource type="Script" uid="uid://chdd6ylacmwnc" path="res://scripts/powerup.gd" id="1_ih772"]
+[ext_resource type="Texture2D" uid="uid://c174535eqys80" path="res://powerup.png" id="2_406cw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fdm2o"]
+radius = 20.0
+
+[node name="Powerup" type="Area2D" unique_id=1364514717 groups=["bricks"]]
+scale = Vector2(0.7, 0.7)
+collision_mask = 2
+script = ExtResource("1_ih772")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=92664142]
+scale = Vector2(0.61538464, 0.61538464)
+texture = ExtResource("2_406cw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1702198420]
+shape = SubResource("CircleShape2D_fdm2o")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

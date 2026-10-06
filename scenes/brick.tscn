@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://b4inldh84dyw3"]
+
+[ext_resource type="Script" uid="uid://bc3pdxho38acm" path="res://scripts/brick.gd" id="1_0w5h4"]
+[ext_resource type="Texture2D" uid="uid://dpowyo3cp7vpk" path="res://square-png-25129.png" id="1_5l4w1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdm2o"]
+size = Vector2(60, 60)
+
+[node name="Brick" type="RigidBody2D" unique_id=2137777963 groups=["bricks"]]
+gravity_scale = 0.0
+script = ExtResource("1_0w5h4")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1614815059]
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("1_5l4w1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1870631188]
+shape = SubResource("RectangleShape2D_fdm2o")
+
+[node name="Health" type="Label" parent="." unique_id=174124747]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1

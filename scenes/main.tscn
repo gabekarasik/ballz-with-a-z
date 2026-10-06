@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://dbyoncx0u4mn8"]
+
+[ext_resource type="Script" uid="uid://b8skmlh1adhft" path="res://scripts/main.gd" id="1_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://cg3xlerknn7vc" path="res://scenes/ball.tscn" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://b4inldh84dyw3" path="res://scenes/brick.tscn" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://mpgite1nqefr" path="res://scripts/floor.gd" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://cd0r7rhjp2hly" path="res://scenes/powerup.tscn" id="4_tbgi4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdm2o"]
+size = Vector2(20, 734)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3c2fn"]
+size = Vector2(20, 736)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_osicj"]
+size = Vector2(514, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6wcbk"]
+size = Vector2(480, 80)
+
+[sub_resource type="Gradient" id="Gradient_sugp2"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_osicj"]
+gradient = SubResource("Gradient_sugp2")
+width = 480
+height = 80
+fill_to = Vector2(0, 0)
+
+[node name="Main" type="Node2D" unique_id=4924]
+script = ExtResource("1_0wfyh")
+brick_scene = ExtResource("3_sugp2")
+ball_scene = ExtResource("2_sugp2")
+powerup_scene = ExtResource("4_tbgi4")
+metadata/_edit_group_ = true
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1240539591]
+
+[node name="Left" type="CollisionShape2D" parent="LeftWall" unique_id=124646614]
+position = Vector2(-10, 358)
+shape = SubResource("RectangleShape2D_fdm2o")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1726371962]
+
+[node name="Right" type="CollisionShape2D" parent="RightWall" unique_id=472468979]
+position = Vector2(490, 363)
+shape = SubResource("RectangleShape2D_3c2fn")
+
+[node name="Ceiling" type="StaticBody2D" parent="." unique_id=1731256378]
+
+[node name="Top" type="CollisionShape2D" parent="Ceiling" unique_id=1556521585]
+position = Vector2(241, -10)
+shape = SubResource("RectangleShape2D_osicj")
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=1389483430]
+script = ExtResource("4_jyhfs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1357469217]
+position = Vector2(240, 680)
+shape = SubResource("RectangleShape2D_6wcbk")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor" unique_id=1727142525]
+position = Vector2(240, 680)
+texture = SubResource("GradientTexture2D_osicj")
+
+[node name="StartPosition" type="Marker2D" parent="." unique_id=975504982]
+position = Vector2(240, 634)
+
+[connection signal="ball_landed" from="Floor" to="." method="set_in_motion"]
