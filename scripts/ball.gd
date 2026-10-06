@@ -14,7 +14,8 @@ func _physics_process(delta: float) -> void:
 				var new_pos = collision.get_position() + ball_offset
 				collider.new_starting_position(new_pos)
 			else:
-				position = collider.get_ball_pos()
+				var tween = create_tween()
+				tween.tween_property(self, "position", collider.get_ball_pos(), 0.3)
 		else:
 			velocity = velocity.bounce(collision.get_normal())
 		

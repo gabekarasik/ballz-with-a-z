@@ -7,10 +7,11 @@ extends Node2D
 var positions = Array()
 var balls = Array()
 var in_motion = 0
-var ball_speed = 500.0
+var ball_speed = 600.0
 var ball_position = Vector2()
 var level = 1
 var new_balls = 0
+var brick_offset = Vector2(67.0, 67.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,13 +34,12 @@ func _physics_process(delta: float) -> void:
 			set_ball(direction)
 
 func create_pos_array():
-	var pos = Vector2(39, 37.0)
+	var pos = Vector2(39, 74.0)
 	for n in 7:
-		positions.append(pos + Vector2(67 * n, 0))
+		positions.append(pos + Vector2(brick_offset.x * n, 0))
 
 func place_bricks():
 	var num_bricks = randi_range(1, 6)
-	var num_doubled = randi_range(0, num_bricks)
 	
 	positions.shuffle()
 	
@@ -47,21 +47,24 @@ func place_bricks():
 		var brick = brick_scene.instantiate()
 		
 		brick.max_health = level
-		if i < num_doubled:
+		
+		var doubled = randf()
+		if doubled < 0.25:
 			brick.max_health *= 2
 			
 		brick.position = positions[i]
 		
 		add_child(brick)
 	
-	var powerup = powerup_scene.instantiate()
-	powerup.position = positions[num_bricks]
-	add_child(powerup)
+	if level > 1:
+		var powerup = powerup_scene.instantiate()
+		powerup.position = positions[num_bricks]
+		add_child(powerup)
 
 func move_bricks():
 	var tween = create_tween().set_parallel()
 	for node in get_tree().get_nodes_in_group("bricks"):
-		tween.tween_property(node, "position", node.position + Vector2(0, 67), 0.5)
+		tween.tween_property(node, "position", node.position + Vector2(0, 67), 0.3)
 
 func set_ball(direction):
 	for ball in balls:

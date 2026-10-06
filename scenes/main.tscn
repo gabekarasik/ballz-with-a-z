@@ -13,7 +13,15 @@ size = Vector2(20, 734)
 size = Vector2(20, 736)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osicj"]
-size = Vector2(514, 20)
+size = Vector2(480, 37)
+
+[sub_resource type="Gradient" id="Gradient_tbgi4"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fdm2o"]
+gradient = SubResource("Gradient_tbgi4")
+width = 480
+height = 37
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6wcbk"]
 size = Vector2(480, 80)
@@ -37,19 +45,24 @@ metadata/_edit_group_ = true
 
 [node name="Left" type="CollisionShape2D" parent="LeftWall" unique_id=124646614]
 position = Vector2(-10, 358)
+rotation = 0.0017453292
 shape = SubResource("RectangleShape2D_fdm2o")
 
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1726371962]
 
 [node name="Right" type="CollisionShape2D" parent="RightWall" unique_id=472468979]
 position = Vector2(490, 363)
+rotation = -0.0017453292
 shape = SubResource("RectangleShape2D_3c2fn")
 
 [node name="Ceiling" type="StaticBody2D" parent="." unique_id=1731256378]
+position = Vector2(240, 18.5)
 
-[node name="Top" type="CollisionShape2D" parent="Ceiling" unique_id=1556521585]
-position = Vector2(241, -10)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling" unique_id=1556521585]
 shape = SubResource("RectangleShape2D_osicj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ceiling" unique_id=1902433412]
+texture = SubResource("GradientTexture2D_fdm2o")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1389483430]
 script = ExtResource("4_jyhfs")
