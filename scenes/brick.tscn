@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fdm2o"]
 size = Vector2(60, 60)
 
-[node name="Brick" type="RigidBody2D" unique_id=2137777963 groups=["bricks"]]
+[node name="Brick" type="RigidBody2D" unique_id=2137777963 groups=["hittables"]]
 gravity_scale = 0.0
 script = ExtResource("1_0w5h4")
 metadata/_edit_group_ = true

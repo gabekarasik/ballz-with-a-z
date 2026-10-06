@@ -28,7 +28,7 @@ project/assembly_name="ballz with a z"
 
 [global_group]
 
-bricks=""
+hittables=""
 
 [input]
 

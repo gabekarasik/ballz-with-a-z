@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://buodu7xm7yt4e"]
+
+[ext_resource type="Script" uid="uid://dbadsks20tngu" path="res://scripts/hud.gd" id="1_ahhtf"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1099044112]
+script = ExtResource("1_ahhtf")
+
+[node name="LevelIndicator" type="Label" parent="." unique_id=1152632240]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -240.0
+offset_right = 240.0
+offset_bottom = 37.0
+grow_horizontal = 2
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BallCounter" type="Label" parent="." unique_id=725407955]
+anchors_preset = -1
+anchor_left = 0.48125
+anchor_top = 0.48402777
+anchor_right = 0.51875
+anchor_bottom = 0.5159722
+offset_bottom = 3.0517578e-05
+grow_horizontal = 2
+grow_vertical = 2
+text = "x1"
+metadata/_edit_use_anchors_ = true

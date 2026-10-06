@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b4inldh84dyw3" path="res://scenes/brick.tscn" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://mpgite1nqefr" path="res://scripts/floor.gd" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cd0r7rhjp2hly" path="res://scenes/powerup.tscn" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://buodu7xm7yt4e" path="res://scenes/hud.tscn" id="6_tefeu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fdm2o"]
 size = Vector2(20, 734)
@@ -77,5 +78,7 @@ texture = SubResource("GradientTexture2D_osicj")
 
 [node name="StartPosition" type="Marker2D" parent="." unique_id=975504982]
 position = Vector2(240, 634)
+
+[node name="HUD" parent="." unique_id=1099044112 instance=ExtResource("6_tefeu")]
 
 [connection signal="ball_landed" from="Floor" to="." method="set_in_motion"]
