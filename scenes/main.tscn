@@ -14,7 +14,7 @@ size = Vector2(20, 734)
 size = Vector2(20, 736)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osicj"]
-size = Vector2(480, 37)
+size = Vector2(480, 30)
 
 [sub_resource type="Gradient" id="Gradient_tbgi4"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -22,7 +22,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_fdm2o"]
 gradient = SubResource("Gradient_tbgi4")
 width = 480
-height = 37
+height = 30
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6wcbk"]
 size = Vector2(480, 80)
@@ -34,6 +34,9 @@ gradient = SubResource("Gradient_sugp2")
 width = 480
 height = 80
 fill_to = Vector2(0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u840f"]
+size = Vector2(480, 60)
 
 [node name="Main" type="Node2D" unique_id=4924]
 script = ExtResource("1_0wfyh")
@@ -57,7 +60,7 @@ rotation = -0.0017453292
 shape = SubResource("RectangleShape2D_3c2fn")
 
 [node name="Ceiling" type="StaticBody2D" parent="." unique_id=1731256378]
-position = Vector2(240, 18.5)
+position = Vector2(240, 15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling" unique_id=1556521585]
 shape = SubResource("RectangleShape2D_osicj")
@@ -81,4 +84,13 @@ position = Vector2(240, 634)
 
 [node name="HUD" parent="." unique_id=1099044112 instance=ExtResource("6_tefeu")]
 
+[node name="GameOverZone" type="Area2D" parent="." unique_id=330902001]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameOverZone" unique_id=1278892329]
+position = Vector2(240, 609)
+shape = SubResource("RectangleShape2D_u840f")
+
 [connection signal="ball_landed" from="Floor" to="." method="set_in_motion"]
+[connection signal="start_game" from="HUD" to="." method="start_game"]
+[connection signal="body_entered" from="GameOverZone" to="." method="_on_game_over_zone_body_entered"]

@@ -7,6 +7,7 @@
 size = Vector2(60, 60)
 
 [node name="Brick" type="RigidBody2D" unique_id=2137777963 groups=["hittables"]]
+collision_mask = 5
 gravity_scale = 0.0
 script = ExtResource("1_0w5h4")
 metadata/_edit_group_ = true

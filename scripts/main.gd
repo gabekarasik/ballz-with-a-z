@@ -16,7 +16,14 @@ var brick_offset = Vector2(67.0, 67.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Ceiling.hide()
+	$Floor.hide()
+	
+func start_game():
+	$Ceiling.show()
+	$Floor.show()
 	$HUD.update_level(level)
+	$HUD.show_level()
 	ball_position = $StartPosition.position
 	var ball = ball_scene.instantiate()
 	ball.position = ball_position
@@ -28,6 +35,21 @@ func _ready() -> void:
 	create_pos_array()
 	place_bricks()
 	move_bricks()
+	set_process_input(true)
+
+func game_over():
+	set_process_input(false)
+	$HUD.show_game_over()
+	get_tree().call_group("hittables", "queue_free")
+	for ball in balls:
+		ball.queue_free()
+	level = 1
+	new_balls = 0
+	num_balls = 0
+	balls = Array()
+	positions = Array()
+	$Ceiling.hide()
+	$Floor.hide()
 
 func _input(event):
 	if event.is_action_released("shoot"):
@@ -37,7 +59,7 @@ func _input(event):
 		set_process_input(false)
 
 func create_pos_array():
-	var pos = Vector2(39, 74.0)
+	var pos = Vector2(39, 67.0)
 	for n in 7:
 		positions.append(pos + Vector2(brick_offset.x * n, 0))
 
@@ -76,8 +98,6 @@ func set_ball(direction):
 		num_balls -= 1
 		$HUD.update_ball_count(num_balls)
 		await get_tree().create_timer(0.1).timeout
-		
-
 
 func set_in_motion() -> void:
 	if in_motion > 0:
@@ -86,20 +106,20 @@ func set_in_motion() -> void:
 	if in_motion == 0:
 		load_next_level()
 
-
 func load_next_level():
 	$Floor.first_hit = false
 	level += 1
 	$HUD.update_level(level)
-	place_bricks()
-	move_bricks()
 	add_balls()
 	$HUD.place_ball_count(ball_position)
+	place_bricks()
+	await get_tree().create_timer(0.2).timeout
+	move_bricks()
 	set_process_input(true)
-	
+
 func new_ball():
 	new_balls += 1
-	
+
 func add_balls():
 	for i in new_balls:
 		var ball = ball_scene.instantiate()
@@ -109,4 +129,8 @@ func add_balls():
 	num_balls = balls.size()
 	$HUD.update_ball_count(num_balls)
 	new_balls = 0
-	
+
+
+func _on_game_over_zone_body_entered(body: Node2D) -> void:
+	game_over()
+	print(body.name)
